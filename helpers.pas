@@ -56,7 +56,7 @@ begin
         Parts[i] := S;
     end;
 
-    Result := String(LineEnding).Join(Parts).Trim;
+    Result := String('  ' + LineEnding).Join(Parts).Trim;
 end;
 
 function ProcessSignature(const AText: String): String;
