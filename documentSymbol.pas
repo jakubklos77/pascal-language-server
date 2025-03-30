@@ -638,7 +638,7 @@ end;
 
 function TSymbolExtractor.AddSymbol(Node: TCodeTreeNode; Kind: TSymbolKind): TSymbol;
 begin
-  AddSymbol(Node, Kind, GetIdentifierAtPos(Tool, Node.StartPos, true, true));
+  Result := AddSymbol(Node, Kind, GetIdentifierAtPos(Tool, Node.StartPos, true, true));
 end;
 
 function TSymbolExtractor.AddSymbol(Node: TCodeTreeNode; Kind: TSymbolKind; Name: String; Container: String): TSymbol;

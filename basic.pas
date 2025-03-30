@@ -223,10 +223,11 @@ type
   private
     fRange: TRange;
     fNewText: string;
-  private
+  public
     constructor Create(ACollection: TCollection); override;
     destructor Destroy; override;
   published
+
     // The range of the text document to be manipulated. To insert
     // text into a document create a range where start === end.
     property range: TRange read fRange write fRange;

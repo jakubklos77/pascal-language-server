@@ -201,9 +201,6 @@
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <Target>
-      <Filename Value="/Users/xuming/zhongzhuo/fpc/fpcextend/fpctoolkit/bin/$(TargetCPU)-$(TargetOS)/pasls"/>
-    </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
@@ -222,7 +219,7 @@
       </Checks>
       <VerifyObjMethodCallValidity Value="True"/>
       <TargetCPU Value="x86_64"/>
-      <TargetOS Value="win64"/>
+      <TargetOS Value="linux"/>
     </CodeGeneration>
     <Linking>
       <Debugging>
