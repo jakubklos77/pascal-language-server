@@ -357,6 +357,7 @@ begin with Params do
   begin
     CodeToolsOptions := TCodeToolsOptions.Create;
     CodeToolBoss.CatchExceptions:=true;
+    CodeToolBoss.Beautifier.LineLength := 500;
     //RaiseUnhandableExceptions:=True;
 
     // TODO: we need to copy this or implement ref counting
