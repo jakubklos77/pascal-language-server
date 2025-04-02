@@ -461,8 +461,8 @@ begin with Params do
                 // add directory as search paths
                 if ServerSettings.includeWorkspaceFoldersAsUnitPaths then
                   begin
-                    initializationOptions.FPCOptions.Add('-Fu'+Path);
-                    initializationOptions.FPCOptions.Add('-Fi'+Path);
+                    initializationOptions.FPCOptions.Add('"-Fu'+Path + '"');
+                    initializationOptions.FPCOptions.Add('"-Fi'+Path + '"');
                   end;
 
                 // if the server supports workspace symbols then
