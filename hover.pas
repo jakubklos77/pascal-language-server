@@ -117,7 +117,7 @@ begin with Params do
     Declaration := Default(TCodeXYPosition);
 
     try
-      DebugLn(code.Filename,code.Scanner.SourceName,code.Scanner.IsUnit.ToString());
+      DebugLn(code.Filename, ' ', code.Scanner.SourceName, ' ', code.Scanner.IsUnit.ToString(), ' ', IntToStr(Cursor.X), ' ', IntToStr(Cursor.Y));
       if not CodeToolBoss.InitCurCodeTool(Code) then begin
           Exit;
       end;
