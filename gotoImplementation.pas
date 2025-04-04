@@ -37,7 +37,8 @@ type
 
 implementation
 uses
-  diagnostics;
+  diagnostics,
+  FileProcs;
   
 function TGotoImplementation.Process(var Params: TTextDocumentPositionParams): TLocation;
 var
@@ -49,7 +50,10 @@ var
 begin with Params do
   begin
     Code := CodeToolBoss.FindFile(UriToFilenameEx(textDocument.uri));
-    code.Revert;
+
+    // Lets stay with the cache and do not revert
+    //code.Revert;
+
     X := position.character;
     Y := position.line;
 
