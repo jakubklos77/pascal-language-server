@@ -132,7 +132,7 @@ begin
     begin
       Notification := TPublishDiagnostics.Create;
       Notification.Add('', 
-                       UserMessage, 
+                       'Error: ' + UserMessage,
                        0, 
                        0, 
                        CodeToolBoss.ErrorID,
@@ -144,7 +144,7 @@ begin
     begin
       Notification := TPublishDiagnostics.Create;
       Notification.Add(CodeToolBoss.ErrorCode.FileName, 
-                       CodeToolBoss.ErrorMessage, 
+                       'Error: ' + CodeToolBoss.ErrorMessage,
                        CodeToolBoss.ErrorLine - 1, 
                        CodeToolBoss.ErrorColumn - 1, 
                        CodeToolBoss.ErrorID,
@@ -223,8 +223,8 @@ begin
   Diagnostic := TDiagnostic(TPublishDiagnosticsParams(params).diagnostics.Add);
   Diagnostic.range := TRange.Create(line, column);
   Diagnostic.severity := severity;
-  Diagnostic.code := IntToStr(code);
-  Diagnostic.source := 'Free Pascal Compiler';
+  Diagnostic.code := '';
+  Diagnostic.source := 'FPC (' + IntToStr(code) + ')';
   Diagnostic.message := message;
 end;
 
