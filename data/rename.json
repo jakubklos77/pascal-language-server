@@ -1,0 +1,15 @@
+{
+    "jsonrpc": "2.0",
+    "id": 19,
+    "method": "textDocument/rename",
+    "params": {
+        "textDocument": {
+            "uri": "file:///mnt/extra/Repository/server/merak/merak/TeamChatApiGWObjectsUnit.pas"
+        },
+        "position": {
+            "line": 50,
+            "character": 8
+        },
+        "newName": "TMyTypeas"
+    }
+}
