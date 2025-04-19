@@ -430,7 +430,7 @@ begin with Params do
 
         {$ifdef LINUX}
         FPCPath := '/usr/local/bin/fpc';
-        FPCSrcDir := '/usr/local/share/fpcsrc';
+        FPCSrcDir := '/usr/share/fpcsrc/3.2.2';
         {$endif}
 
         InitWithEnvironmentVariables;
