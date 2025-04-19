@@ -93,6 +93,7 @@ begin
     try
       Graph.AddStartUnit(MainFilename);
       Graph.AddTargetUnit(DeclCode.Filename);
+      Graph.AddTargetUnit(MainFilename);
       Graph.Parse(true,Completed);
       Node:=Graph.FilesTree.FindLowest;
       while Node<>nil do begin
@@ -160,8 +161,6 @@ var
 begin
   Input := specialize TLSPStreaming<TRenameParams>.ToObject(Params);
   we:=TWorkspaceEdit.Create;
-  
-
 
   try
     Path := UriToFilenameEx(input.textDocument.uri);
@@ -180,25 +179,25 @@ begin
 
     if not assigned(av_tree) then exit;
 
-      ANode:=av_tree.FindHighest;
-      while ANode<>nil do begin
-        CodePos:=PCodeXYPosition(ANode.Data);
-        path:=PathToURI(CodePos^.Code.Filename);
-        if not we.changes.TryGetData(path,items) then
-        begin
-          items:=TChangeItems.Create;
-          we.changes.Add(path,items);
-        end;
-
-        edit:=items.Add;
-        edit.range.start.line:=CodePos^.Y - 1;
-        edit.range.start.character:=CodePos^.X - 1;
-        edit.range.&end.line:=CodePos^.Y - 1;
-        edit.range.&end.character:=CodePos^.X-1 +length(identifier);
-        edit.newText:=input.newName;
-        //writeln(StdErr, '  Found: ', CodePos^.Code.Filename, ' @ ', CodePos^.Y, ',',CodePos^.X);
-        ANode:=av_tree.FindPrecessor(ANode);
+    ANode:=av_tree.FindHighest;
+    while ANode<>nil do begin
+      CodePos:=PCodeXYPosition(ANode.Data);
+      path:=PathToURI(CodePos^.Code.Filename);
+      if not we.changes.TryGetData(path,items) then
+      begin
+        items:=TChangeItems.Create;
+        we.changes.Add(path,items);
       end;
+
+      edit:=items.Add;
+      edit.range.start.line:=CodePos^.Y - 1;
+      edit.range.start.character:=CodePos^.X - 1;
+      edit.range.&end.line:=CodePos^.Y - 1;
+      edit.range.&end.character:=CodePos^.X-1 +length(identifier);
+      edit.newText:=input.newName;
+      writeln(StdErr, '  Found: ', CodePos^.Code.Filename, ' @ ', CodePos^.Y, ',',CodePos^.X);
+      ANode:=av_tree.FindPrecessor(ANode);
+    end;
   finally
     Result:=we.ToJson();
     we.Free;
