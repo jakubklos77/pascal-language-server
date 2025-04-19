@@ -23,7 +23,7 @@ program pasls;
 
 uses
   { RTL }
-  SysUtils, fpjson, jsonparser, jsonscanner,
+  SysUtils, fpjson, jsonparser, jsonscanner, classes,
 
   { LSP }
   lsp, general, 
@@ -88,13 +88,55 @@ begin
     writeln(data.AsJSON);
 end;
 
+function GetFileRequest(AName: string): TJSONData;
+var
+  stream: TFileStream;
+  str: ansistring;
+begin
+  stream := TFileStream.Create(ExtractFilePath(ParamStr(0)) + '../../data/' + AName, fmOpenRead);
+  try
+    SetLength(str, stream.size);
+    stream.Read(str[1], stream.size);
+    Result := TJSONParser.Create(str, DefaultOptions).Parse;
+  finally
+    stream.Free;
+  end;
+end;
+
+procedure RunFileRequest(Dispatcher: TLSPDispatcher; AName: ansistring);
+var
+  Request: TJSONData;
+  Response: TJSONData;
+begin
+  Request := GetFileRequest(AName);
+  writeln(Request.AsJSON);
+  Response := Dispatcher.Execute(Request);
+  if Response <> nil then
+    writeln(Response.AsJSON);
+
+  Request.Free;
+  Response.Free;
+end;
+
+procedure PerformTestRun;
+var
+  Dispatcher: TLSPDispatcher;
+begin
+  Dispatcher := TLSPDispatcher.Create(nil);
+
+  RunFileRequest(Dispatcher, 'init.json');
+  RunFileRequest(Dispatcher, 'rename.json');
+
+  Halt(0);
+end;
+
 procedure RunConsole;
 var
   Dispatcher: TLSPDispatcher;
   Header, Name, Value, Content: string;
   I, Length: Integer;
   Request, Response: TJSONData;
-  VerboseDebugging: boolean = false;
+  VerboseDebugging: boolean = true;
 begin
   //TestNotifications;
   //halt;
@@ -105,6 +147,9 @@ begin
   SetTextLineEnding(Output, #13#10);
   SetTextCodePage(Input,CP_UTF8);
   SetTextCodePage(Output,CP_UTF8);
+
+  if FindCmdLineSwitch('-test-run') then
+    PerformTestRun;
   
   while not EOF do
   begin
