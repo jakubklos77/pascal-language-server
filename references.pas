@@ -118,6 +118,7 @@ begin
     try
       Graph.AddStartUnit(MainFilename);
       Graph.AddTargetUnit(DeclCode.Filename);
+      Graph.AddTargetUnit(MainFilename);
       Graph.Parse(true,Completed);
       Node:=Graph.FilesTree.FindLowest;
       while Node<>nil do begin
