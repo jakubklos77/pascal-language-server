@@ -156,7 +156,7 @@ var
   Header, Name, Value, Content: string;
   I, Length: Integer;
   Request, Response: TJSONData;
-  VerboseDebugging: boolean = true;
+  VerboseDebugging: boolean = false;
 begin
   Length:=0;
   Dispatcher := TLSPDispatcher.Create(nil);
