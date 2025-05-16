@@ -3,10 +3,10 @@
     "id": 0,
     "method": "initialize",
     "params": {
-        "processId": 71610,
+        "processId": 275338,
         "clientInfo": {
             "name": "Visual Studio Code",
-            "version": "1.99.3"
+            "version": "1.100.2"
         },
         "locale": "en",
         "rootPath": "/mnt/extra/Repository/server/merak",
@@ -533,7 +533,7 @@
                 "\"-k-L/home/jakub/app/icewarp/lib/\""
             ],
             "maximumCompletions": 50,
-            "program": "merak/tests/MerakServiceTest/MerakServiceTest.lpi",
+            "program": "/mnt/extra/Repository/server/merak/merak/tests/MerakServiceTest/MerakServiceTest.dpr",
             "overloadPolicy": 3,
             "insertCompletionsAsSnippets": false,
             "includeWorkspaceFoldersAsIncludePaths": false,
