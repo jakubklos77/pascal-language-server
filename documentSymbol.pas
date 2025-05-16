@@ -849,6 +849,8 @@ var
   isImplementation:Boolean;
 
 begin
+  if Node = nil then
+    exit;
   isImplementation:=(node.Parent<>nil) and  (node.Parent.Desc=ctnImplementation);
   lastClassSymbol:=nil;
   while Node <> nil do
