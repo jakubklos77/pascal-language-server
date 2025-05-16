@@ -1,0 +1,77 @@
+{
+    "jsonrpc": "2.0",
+    "method": "textDocument/didChange",
+    "params": {
+        "textDocument": {
+            "uri": "file:///mnt/extra/Repository/server/merak/merak/FastServiceComunication.pas",
+            "version": 10
+        },
+        "contentChanges": [
+            {
+                "range": {
+                    "start": {
+                        "line": 0,
+                        "character": 0
+                    },
+                    "end": {
+                        "line": 0,
+                        "character": 0
+                    }
+                },
+                "rangeLength": 0,
+                "text": "s"
+            }
+        ]
+    }
+}
+{
+    "jsonrpc": "2.0",
+    "id": 84,
+    "method": "textDocument/completion",
+    "params": {
+        "textDocument": {
+            "uri": "file:///mnt/extra/Repository/server/merak/merak/FastServiceComunication.pas"
+        },
+        "position": {
+            "line": 0,
+            "character": 1
+        },
+        "context": {
+            "triggerKind": 1
+        }
+    }
+}
+{
+    "jsonrpc": "2.0",
+    "id": 85,
+    "method": "textDocument/codeAction",
+    "params": {
+        "textDocument": {
+            "uri": "file:///mnt/extra/Repository/server/merak/merak/FastServiceComunication.pas"
+        },
+        "range": {
+            "start": {
+                "line": 0,
+                "character": 1
+            },
+            "end": {
+                "line": 0,
+                "character": 1
+            }
+        },
+        "context": {
+            "diagnostics": [],
+            "triggerKind": 2
+        }
+    }
+}
+{
+    "jsonrpc": "2.0",
+    "id": 86,
+    "method": "textDocument/documentSymbol",
+    "params": {
+        "textDocument": {
+            "uri": "file:///mnt/extra/Repository/server/merak/merak/FastServiceComunication.pas"
+        }
+    }
+}

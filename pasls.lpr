@@ -63,34 +63,73 @@ begin
   writeln('got params: ', Params.ClassName)
 end;
 
-function GetFileRequest(AName: string): TJSONData;
+type
+  TFileRequest = record
+    Name: string;
+    InFile: system.text;
+    IsOpen: boolean;
+  end;
+
+function GetFileRequest(var Request: TFileRequest): TJSONData;
 var
   stream: TFileStream;
-  str: ansistring;
+  data, str: string;
 begin
-  stream := TFileStream.Create(ExtractFilePath(ParamStr(0)) + '../../data/' + AName, fmOpenRead);
-  try
-    SetLength(str, stream.size);
-    stream.Read(str[1], stream.size);
-    Result := TJSONParser.Create(str, DefaultOptions).Parse;
-  finally
-    stream.Free;
+  Result := nil;
+
+  // Open
+  if not Request.IsOpen then
+  begin
+    Request.IsOpen := true;
+    AssignFile(Request.InFile, ExtractFilePath(ParamStr(0)) + '../../data/' + Request.Name);
+    Reset(Request.InFile);
   end;
+
+  // Keep reading
+  str := '';
+  while not Eof(Request.InFile) do
+  begin
+    Readln(Request.InFile, data);
+    str := str + data + LineEnding;
+    if data = '}' then
+    begin
+      Result := TJSONParser.Create(str, DefaultOptions).Parse;
+      exit;
+    end;
+  end;
+
+  // Close
+  CloseFile(Request.InFile);
 end;
 
 procedure RunFileRequest(Dispatcher: TLSPDispatcher; AName: ansistring);
 var
   Request: TJSONData;
   Response: TJSONData;
+  FileRequest: TFileRequest;
 begin
-  Request := GetFileRequest(AName);
-  writeln(Request.AsJSON);
-  Response := Dispatcher.Execute(Request);
-  if Response <> nil then
-    writeln(Response.AsJSON);
+  // Init
+  FillChar(FileRequest, SizeOf(FileRequest), 0);
+  FileRequest.Name := AName;
 
-  Request.Free;
-  Response.Free;
+  // Keep
+  while true do
+  begin
+    // Get request
+    Request := GetFileRequest(FileRequest);
+    if Request = nil then
+      break;
+    writeln(Request.AsJSON);
+
+    // Execute
+    Response := Dispatcher.Execute(Request);
+    if Response <> nil then
+      writeln(Response.AsJSON);
+
+    // Finalize
+    Request.Free;
+    Response.Free;
+  end;
 end;
 
 procedure PerformTestRun;
@@ -102,11 +141,11 @@ begin
   // Init
   RunFileRequest(Dispatcher, 'init.json');
 
-  // Set program path
-  ServerSettings.&program := '/mnt/extra/Repository/server/merak/merak/tests/MerakServiceTest/MerakServiceTest.dpr';
-
   // Rename test
-  RunFileRequest(Dispatcher, 'rename.json');
+  //RunFileRequest(Dispatcher, 'rename.json');
+
+  // Document symbol
+  RunFileRequest(Dispatcher, 'doc_symbol.json');
 
   Halt(0);
 end;
@@ -117,7 +156,7 @@ var
   Header, Name, Value, Content: string;
   I, Length: Integer;
   Request, Response: TJSONData;
-  VerboseDebugging: boolean = false;
+  VerboseDebugging: boolean = true;
 begin
   Length:=0;
   Dispatcher := TLSPDispatcher.Create(nil);
