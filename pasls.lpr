@@ -26,10 +26,10 @@ uses
   SysUtils, fpjson, jsonparser, jsonscanner, classes,
 
   { LSP }
-  lsp, general, 
+  lsp, general,
 
   { Protocols }
-  basic, synchronization, completion, gotoDeclaration, gotoDefinition, 
+  basic, synchronization, completion, gotoDeclaration, gotoDefinition,
   gotoImplementation, hover, signatureHelp, references, codeAction, rename,
   documentHighlight, documentSymbol, workspace, window, diagnostics, settings,
 
@@ -168,7 +168,7 @@ begin
 
   if FindCmdLineSwitch('-test-run') then
     PerformTestRun;
-  
+
   while not EOF do
   begin
     ReadLn(Header);
@@ -190,7 +190,7 @@ begin
       Read(Content[I]);
       Inc(I);
     end;
-    
+
     Request := TJSONParser.Create(Content, DefaultOptions).Parse;
 
     if TJSONObject(request).Find('params')=nil then
@@ -204,7 +204,7 @@ begin
         writeln(StdErr, Request.FormatJSON);
         Flush(StdErr);
       end;
-      
+
     Response := Dispatcher.Execute(Request);
     if Assigned(Response) then
     begin
@@ -220,7 +220,7 @@ begin
       WriteLn;
       Write(Content);
       Flush(Output);
-      
+
       // log response payload
       if VerboseDebugging then
         begin
@@ -238,7 +238,7 @@ var log:TMyLogger;
 begin
   log:=TMyLogger.Create;
   SetDebugLogger(log);
-  
+
   RunConsole;
   log.Free;
 end.

@@ -235,6 +235,9 @@
       <WriteFPCLogo Value="False"/>
       <CustomOptions Value="-dx86_64 -gw -godwarfcpp"/>
     </Other>
+    <Target>
+      <Filename Value="lib/x86_64-linux/pasls"/>
+    </Target>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="1">
